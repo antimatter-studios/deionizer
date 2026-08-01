@@ -42,6 +42,14 @@ import (
 // small --timeout to reap its runaways sooner.
 const defaultFileTimeout = 120 * time.Second
 
+// version and buildDate are stamped at release time via -ldflags -X (see
+// .goreleaser.yml: -X main.version / -X main.buildDate). A plain `go build`
+// leaves them at these defaults, so a local build reports "dev".
+var (
+	version   = "dev"
+	buildDate = ""
+)
+
 // options holds everything the binary needs to run, and it is populated ONLY from
 // the command line — never from the process environment. Ambient config (os.Getenv
 // reach-outs) is deliberately avoided so the path from user configuration to
@@ -94,6 +102,14 @@ func main() {
 		err = cmdBuild(rest, opt)
 	case "shell":
 		err = cmdShell(rest, opt)
+	case "version", "--version":
+		// Bare version on stdout, one line, so a release self-check can
+		// `grep -qx` it and the Homebrew formula test can assert_match it.
+		fmt.Println(version)
+		if buildDate != "" {
+			fmt.Fprintln(os.Stderr, "built "+buildDate)
+		}
+		return
 	case "help", "-h", "--help":
 		usage(os.Stdout)
 		return
@@ -225,6 +241,7 @@ USAGE
                                              rollup
   deionizer build [X.Y]                 build/ensure the runtime image (default 7.4)
   deionizer shell <dir> [X.Y]           interactive shell in the matched container
+  deionizer version                     print the binary version and exit
 
 FLAGS
   --skeleton        interface-only recovery instead of full decode

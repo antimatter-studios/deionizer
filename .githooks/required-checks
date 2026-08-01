@@ -1,0 +1,6 @@
+# .githooks/required-checks — the status check main must pass before it takes a merge.
+#
+# One always-run aggregate job (CI) that `needs:` the test matrix, so the matrix legs
+# can be renamed or extended (more OSes, split steps) without ever stranding a merge on
+# a check name that stopped reporting. See .github/workflows/ci.yml.
+CI
