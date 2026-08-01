@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-01T14:41:18+02:00",
-  "decoder": "/Volumes/sdcard256gb/projects/deionizer/bin/deionizer-base",
+  "generated": "2026-08-01T18:06:50+02:00",
+  "decoder": "/Volumes/sdcard256gb/projects/deionizer/bin/deionizer",
   "encoder": "ionCube PHP Encoder 15.0 (evaluation), ioncube_encoderNN_15.0_64",
   "versions_run": [
     "5.6"
@@ -10,69 +10,29 @@
     "plain"
   ],
   "summary": {
-    "applicable_cells": 22,
-    "artifact": 22,
-    "lint_pass": 22,
-    "behavior_pass": 5,
-    "success_rate_pct": 22.727272727272727,
+    "applicable_cells": 4,
+    "artifact": 4,
+    "lint_pass": 4,
+    "behavior_pass": 4,
+    "success_rate_pct": 100,
     "by_method": {
       "plain": {
-        "pass": 5,
-        "total": 22,
-        "pct": 22.727272727272727
+        "pass": 4,
+        "total": 4,
+        "pct": 100
       }
     },
     "by_version": {
       "5.6": {
-        "pass": 5,
-        "total": 22,
-        "pct": 22.727272727272727
+        "pass": 4,
+        "total": 4,
+        "pct": 100
       }
     }
   },
   "cells": [
     {
-      "construct": "arrow functions",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": false,
-      "status": "na",
-      "reason": "construct needs PHP 7.4..8.4",
-      "artifact": false,
-      "lint": "na",
-      "behavior": "na",
-      "expected": "",
-      "actual": "",
-      "similarity_pct": 0
-    },
-    {
-      "construct": "by-reference params",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "16|x,y",
-      "actual": "",
-      "similarity_pct": 52.75590551181102
-    },
-    {
-      "construct": "class constants",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "1.2|1.2:100:a,b",
-      "actual": "1.2|VERSION:MAX:",
-      "similarity_pct": 80.35714285714286
-    },
-    {
-      "construct": "closures with use()",
+      "construct": "class constants + ::class",
       "version": "5.6",
       "method": "plain",
       "applicable": true,
@@ -80,12 +40,12 @@
       "artifact": true,
       "lint": "pass",
       "behavior": "pass",
-      "expected": "15|12",
-      "actual": "15|12",
-      "similarity_pct": 89.36170212765957
+      "expected": "2.0|a,b|Widget|iface|Widget",
+      "actual": "2.0|a,b|Widget|iface|Widget",
+      "similarity_pct": 81.34328358208955
     },
     {
-      "construct": "do-while loop",
+      "construct": "interfaces + abstract methods",
       "version": "5.6",
       "method": "plain",
       "applicable": true,
@@ -93,51 +53,12 @@
       "artifact": true,
       "lint": "pass",
       "behavior": "pass",
-      "expected": "0,1,2|0",
-      "actual": "0,1,2|0",
-      "similarity_pct": 81.31868131868131
+      "expected": "shape:Square=16|3|yes",
+      "actual": "shape:Square=16|3|yes",
+      "similarity_pct": 83.07692307692308
     },
     {
-      "construct": "for loop",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "15|55",
-      "actual": "",
-      "similarity_pct": 64.28571428571429
-    },
-    {
-      "construct": "foreach (value and key=\u003evalue)",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "2,4,6|a=1,b=2",
-      "actual": "",
-      "similarity_pct": 56.213017751479285
-    },
-    {
-      "construct": "functions with default params",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "Hello, World!|Hi, Sam!|Yo, A?",
-      "actual": ", World|Hi, Sam|Yo, A?",
-      "similarity_pct": 80.20833333333334
-    },
-    {
-      "construct": "if / elseif / else",
+      "construct": "namespaced classes (5.6-safe: new/static/instanceof/extends)",
       "version": "5.6",
       "method": "plain",
       "applicable": true,
@@ -145,131 +66,12 @@
       "artifact": true,
       "lint": "pass",
       "behavior": "pass",
-      "expected": "neg|zero|small|big",
-      "actual": "neg|zero|small|big",
-      "similarity_pct": 86.60714285714286
+      "expected": "gadget,base,widget|Acme\\Widgets\\Gadget|yes|yes",
+      "actual": "gadget,base,widget|Acme\\Widgets\\Gadget|yes|yes",
+      "similarity_pct": 77.3076923076923
     },
     {
-      "construct": "keyed foreach with a nested if",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "name,age?",
-      "actual": "NULL",
-      "similarity_pct": 54.761904761904766
-    },
-    {
-      "construct": "loop wrapping a switch",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "BI|UNI|",
-      "actual": "",
-      "similarity_pct": 34.97942386831276
-    },
-    {
-      "construct": "main_procedural",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "hello world\na=1\nb=2\nc=3\nbig total: 5\n",
-      "actual": "GREETING",
-      "similarity_pct": 50.753768844221106
-    },
-    {
-      "construct": "match expression",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": false,
-      "status": "na",
-      "reason": "construct needs PHP 8..8.4",
-      "artifact": false,
-      "lint": "na",
-      "behavior": "na",
-      "expected": "",
-      "actual": "",
-      "similarity_pct": 0
-    },
-    {
-      "construct": "nested / associative arrays",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "probe|1,2,3,4|9",
-      "actual": "probe|1,2,3,|9",
-      "similarity_pct": 79.47019867549669
-    },
-    {
-      "construct": "nested foreach",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "0:1,0:2,1:3,1:4",
-      "actual": "NULL",
-      "similarity_pct": 58.71559633027523
-    },
-    {
-      "construct": "null coalescing (??)",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": false,
-      "status": "na",
-      "reason": "construct needs PHP 7..8.4",
-      "artifact": false,
-      "lint": "na",
-      "behavior": "na",
-      "expected": "",
-      "actual": "",
-      "similarity_pct": 0
-    },
-    {
-      "construct": "references",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "10,20,30|7",
-      "actual": "NULL",
-      "similarity_pct": 65.71428571428571
-    },
-    {
-      "construct": "static + instance methods",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "16|Counter",
-      "actual": "15|Counter",
-      "similarity_pct": 91.83673469387756
-    },
-    {
-      "construct": "string concat + interpolation",
+      "construct": "traits + conflict resolution",
       "version": "5.6",
       "method": "plain",
       "applicable": true,
@@ -277,87 +79,9 @@
       "artifact": true,
       "lint": "pass",
       "behavior": "pass",
-      "expected": "Hi Sam, n=3|name=Sam count=3 key=V",
-      "actual": "Hi Sam, n=3|name=Sam count=3 key=V",
-      "similarity_pct": 75.40983606557377
-    },
-    {
-      "construct": "string switch with fall-through",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "ab|ab|cd|d|other",
-      "actual": "other|other|other|other|other",
-      "similarity_pct": 73.07692307692307
-    },
-    {
-      "construct": "switch with return arms",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "1|2|3|0",
-      "actual": "0|2|3|0",
-      "similarity_pct": 54.81927710843374
-    },
-    {
-      "construct": "ternary (full and short)",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "pos:5|nonpos:empty|nonpos:-2",
-      "actual": "pos:pos|nonpos:nonpos|nonpos:nonpos",
-      "similarity_pct": 83.33333333333334
-    },
-    {
-      "construct": "try / catch / finally",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "pass",
-      "expected": "ok:5,done|caught:neg,done",
-      "actual": "ok:5,done|caught:neg,done",
-      "similarity_pct": 85.29411764705883
-    },
-    {
-      "construct": "variadic params (splat)",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "a-b-c|1,2,3,4",
-      "actual": "a-b-c|21314",
-      "similarity_pct": 81.72043010752688
-    },
-    {
-      "construct": "while loop",
-      "version": "5.6",
-      "method": "plain",
-      "applicable": true,
-      "status": "ok",
-      "artifact": true,
-      "lint": "pass",
-      "behavior": "fail",
-      "expected": "4,3,2,1|",
-      "actual": "4|",
-      "similarity_pct": 81.70731707317073
+      "expected": "hello|world|B",
+      "actual": "hello|world|B",
+      "similarity_pct": 69.17808219178082
     }
   ],
   "dynkeys": null

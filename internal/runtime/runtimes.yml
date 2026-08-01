@@ -23,7 +23,7 @@ runtimes:
   "5.6":
     image: "deionizer:php5.6"
     platform: "linux/amd64"
-    decode_image: "ioncube-decode56:v11"
+    decode_image: "ioncube-decode56:work"
   "7.2":
     image: "deionizer:php7.2"
     platform: ""
