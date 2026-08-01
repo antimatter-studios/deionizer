@@ -1,0 +1,9 @@
+==== trace: ::countdown ====
+IC_TRACE ReflectionFunction::__construct("countdown")
+IC_TRACE ReflectionFunction::invokeArgs([])
+IC_TRACE implode(",", [])
+==== trace: ::probe ====
+IC_TRACE ReflectionFunction::__construct("probe")
+IC_TRACE ReflectionFunction::invokeArgs([])
+IC_TRACE implode(",", [0=>int(4), 1=>int(3), 2=>int(2), 3=>int(1)])
+IC_TRACE implode(",", [])

@@ -1,0 +1,1182 @@
+[
+  {
+    "class": "",
+    "function": "classify",
+    "file": "/enc/match_expr.php",
+    "static": false,
+    "visibility": "",
+    "params": [
+      {
+        "name": "n",
+        "has_default": false
+      }
+    ],
+    "num_vars": 1,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 5,
+        "opcode": "ZEND_RECV",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "CV",
+          "var": "n"
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 7,
+        "opcode": "ZEND_IS_SMALLER",
+        "op1": {
+          "t": "CV",
+          "var": "n"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": 0
+        },
+        "result": {
+          "t": "TMP",
+          "num": 2
+        },
+        "ext": 0
+      },
+      {
+        "i": 2,
+        "line": 7,
+        "opcode": "ZEND_IS_IDENTICAL",
+        "op1": {
+          "t": "TMP",
+          "num": 2
+        },
+        "op2": {
+          "t": "CONST",
+          "val": true
+        },
+        "result": {
+          "t": "TMP",
+          "num": 1
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 7,
+        "opcode": "ZEND_JMPNZ",
+        "op1": {
+          "t": "TMP",
+          "num": 1
+        },
+        "op2": {
+          "t": "JMP",
+          "jmp": 11
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 4,
+        "line": 8,
+        "opcode": "ZEND_IS_IDENTICAL",
+        "op1": {
+          "t": "CV",
+          "var": "n"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": 0
+        },
+        "result": {
+          "t": "TMP",
+          "num": 3
+        },
+        "ext": 0
+      },
+      {
+        "i": 5,
+        "line": 8,
+        "opcode": "ZEND_IS_IDENTICAL",
+        "op1": {
+          "t": "TMP",
+          "num": 3
+        },
+        "op2": {
+          "t": "CONST",
+          "val": true
+        },
+        "result": {
+          "t": "TMP",
+          "num": 1
+        },
+        "ext": 0
+      },
+      {
+        "i": 6,
+        "line": 8,
+        "opcode": "ZEND_JMPNZ",
+        "op1": {
+          "t": "TMP",
+          "num": 1
+        },
+        "op2": {
+          "t": "JMP",
+          "jmp": 13
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 7,
+        "line": 9,
+        "opcode": "ZEND_IS_SMALLER",
+        "op1": {
+          "t": "CV",
+          "var": "n"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": 10
+        },
+        "result": {
+          "t": "TMP",
+          "num": 4
+        },
+        "ext": 0
+      },
+      {
+        "i": 8,
+        "line": 9,
+        "opcode": "ZEND_IS_IDENTICAL",
+        "op1": {
+          "t": "TMP",
+          "num": 4
+        },
+        "op2": {
+          "t": "CONST",
+          "val": true
+        },
+        "result": {
+          "t": "TMP",
+          "num": 1
+        },
+        "ext": 0
+      },
+      {
+        "i": 9,
+        "line": 9,
+        "opcode": "ZEND_JMPNZ",
+        "op1": {
+          "t": "TMP",
+          "num": 1
+        },
+        "op2": {
+          "t": "JMP",
+          "jmp": 15
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 10,
+        "line": 9,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 17
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 11,
+        "line": 7,
+        "opcode": "ZEND_QM_ASSIGN",
+        "op1": {
+          "t": "CONST",
+          "val": "neg"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 5
+        },
+        "ext": 0
+      },
+      {
+        "i": 12,
+        "line": 7,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 19
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 13,
+        "line": 8,
+        "opcode": "ZEND_QM_ASSIGN",
+        "op1": {
+          "t": "CONST",
+          "val": "zero"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 5
+        },
+        "ext": 0
+      },
+      {
+        "i": 14,
+        "line": 8,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 19
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 15,
+        "line": 9,
+        "opcode": "ZEND_QM_ASSIGN",
+        "op1": {
+          "t": "CONST",
+          "val": "small"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 5
+        },
+        "ext": 0
+      },
+      {
+        "i": 16,
+        "line": 9,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 19
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 17,
+        "line": 10,
+        "opcode": "ZEND_QM_ASSIGN",
+        "op1": {
+          "t": "CONST",
+          "val": "big"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 5
+        },
+        "ext": 0
+      },
+      {
+        "i": 18,
+        "line": 10,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 19
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 19,
+        "line": 10,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "TMP",
+          "num": 5
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 20,
+        "line": 12,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  },
+  {
+    "class": "",
+    "function": "code",
+    "file": "/enc/match_expr.php",
+    "static": false,
+    "visibility": "",
+    "params": [
+      {
+        "name": "s",
+        "has_default": false
+      }
+    ],
+    "num_vars": 1,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 13,
+        "opcode": "ZEND_RECV",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "CV",
+          "var": "s"
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 14,
+        "opcode": "ZEND_MATCH",
+        "op1": {
+          "t": "CV",
+          "var": "s"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": {
+            "a": 32,
+            "b": 32,
+            "c": 96
+          }
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 160
+      },
+      {
+        "i": 2,
+        "line": 15,
+        "opcode": "ZEND_QM_ASSIGN",
+        "op1": {
+          "t": "CONST",
+          "val": 1
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 2
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 15,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 8
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 4,
+        "line": 16,
+        "opcode": "ZEND_QM_ASSIGN",
+        "op1": {
+          "t": "CONST",
+          "val": 2
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 2
+        },
+        "ext": 0
+      },
+      {
+        "i": 5,
+        "line": 16,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 8
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 6,
+        "line": 17,
+        "opcode": "ZEND_QM_ASSIGN",
+        "op1": {
+          "t": "CONST",
+          "val": 0
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 2
+        },
+        "ext": 0
+      },
+      {
+        "i": 7,
+        "line": 17,
+        "opcode": "ZEND_JMP",
+        "op1": {
+          "t": "JMP",
+          "jmp": 8
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 8,
+        "line": 17,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "TMP",
+          "num": 2
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 9,
+        "line": 19,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  },
+  {
+    "class": "",
+    "function": "probe",
+    "file": "/enc/match_expr.php",
+    "static": false,
+    "visibility": "",
+    "params": [],
+    "num_vars": 0,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 21,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "classify"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 1,
+        "line": 21,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": -1
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 2,
+        "line": 21,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 0
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 21,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "VAR",
+          "num": 0
+        },
+        "op2": {
+          "t": "CONST",
+          "val": ","
+        },
+        "result": {
+          "t": "TMP",
+          "num": 1
+        },
+        "ext": 0
+      },
+      {
+        "i": 4,
+        "line": 21,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "classify"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 5,
+        "line": 21,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": 0
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 6,
+        "line": 21,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 2
+        },
+        "ext": 0
+      },
+      {
+        "i": 7,
+        "line": 21,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 1
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 2
+        },
+        "result": {
+          "t": "TMP",
+          "num": 3
+        },
+        "ext": 0
+      },
+      {
+        "i": 8,
+        "line": 21,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 3
+        },
+        "op2": {
+          "t": "CONST",
+          "val": ","
+        },
+        "result": {
+          "t": "TMP",
+          "num": 4
+        },
+        "ext": 0
+      },
+      {
+        "i": 9,
+        "line": 21,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "classify"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 10,
+        "line": 21,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": 5
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 11,
+        "line": 21,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 5
+        },
+        "ext": 0
+      },
+      {
+        "i": 12,
+        "line": 21,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 4
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 5
+        },
+        "result": {
+          "t": "TMP",
+          "num": 6
+        },
+        "ext": 0
+      },
+      {
+        "i": 13,
+        "line": 21,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 6
+        },
+        "op2": {
+          "t": "CONST",
+          "val": ","
+        },
+        "result": {
+          "t": "TMP",
+          "num": 7
+        },
+        "ext": 0
+      },
+      {
+        "i": 14,
+        "line": 21,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "classify"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 15,
+        "line": 21,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": 99
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 16,
+        "line": 21,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 8
+        },
+        "ext": 0
+      },
+      {
+        "i": 17,
+        "line": 21,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 7
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 8
+        },
+        "result": {
+          "t": "TMP",
+          "num": 9
+        },
+        "ext": 0
+      },
+      {
+        "i": 18,
+        "line": 22,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 9
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "|"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 10
+        },
+        "ext": 0
+      },
+      {
+        "i": 19,
+        "line": 22,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "code"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 20,
+        "line": 22,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": "a"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 21,
+        "line": 22,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 11
+        },
+        "ext": 0
+      },
+      {
+        "i": 22,
+        "line": 22,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 10
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 11
+        },
+        "result": {
+          "t": "TMP",
+          "num": 12
+        },
+        "ext": 0
+      },
+      {
+        "i": 23,
+        "line": 22,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "code"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 24,
+        "line": 22,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": "b"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 25,
+        "line": 22,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 13
+        },
+        "ext": 0
+      },
+      {
+        "i": 26,
+        "line": 22,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 12
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 13
+        },
+        "result": {
+          "t": "TMP",
+          "num": 14
+        },
+        "ext": 0
+      },
+      {
+        "i": 27,
+        "line": 22,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "code"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 28,
+        "line": 22,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": "c"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 29,
+        "line": 22,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 15
+        },
+        "ext": 0
+      },
+      {
+        "i": 30,
+        "line": 22,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 14
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 15
+        },
+        "result": {
+          "t": "TMP",
+          "num": 16
+        },
+        "ext": 0
+      },
+      {
+        "i": 31,
+        "line": 22,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "code"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 32,
+        "line": 22,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": "z"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 33,
+        "line": 22,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 17
+        },
+        "ext": 0
+      },
+      {
+        "i": 34,
+        "line": 22,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 16
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 17
+        },
+        "result": {
+          "t": "TMP",
+          "num": 18
+        },
+        "ext": 0
+      },
+      {
+        "i": 35,
+        "line": 22,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "TMP",
+          "num": 18
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 36,
+        "line": 23,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  }
+]

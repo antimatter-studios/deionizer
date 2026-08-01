@@ -1,0 +1,19 @@
+==== trace: Counter::__construct ====
+IC_TRACE ReflectionMethod::isStatic()
+IC_TRACE ReflectionClass::newInstanceWithoutConstructor()
+IC_TRACE ReflectionMethod::invokeArgs(object, [])
+==== trace: Counter::inc ====
+IC_TRACE ReflectionMethod::isStatic()
+IC_TRACE ReflectionClass::newInstanceWithoutConstructor()
+IC_TRACE ReflectionMethod::invokeArgs(object, [])
+==== trace: Counter::value ====
+IC_TRACE ReflectionMethod::isStatic()
+IC_TRACE ReflectionClass::newInstanceWithoutConstructor()
+IC_TRACE ReflectionMethod::invokeArgs(object, [])
+==== trace: Counter::make ====
+IC_TRACE ReflectionMethod::isStatic()
+IC_TRACE ReflectionMethod::invokeArgs(null, [])
+==== trace: ::probe ====
+IC_TRACE ReflectionFunction::__construct("probe")
+IC_TRACE ReflectionFunction::invokeArgs([])
+IC_TRACE get_class(object)

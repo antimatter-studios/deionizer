@@ -1,0 +1,9 @@
+==== trace: Config::describe ====
+IC_TRACE ReflectionMethod::isStatic()
+IC_TRACE ReflectionClass::newInstanceWithoutConstructor()
+IC_TRACE ReflectionMethod::invokeArgs(object, [])
+IC_TRACE implode(",", [0=>"a", 1=>"b"])
+==== trace: ::probe ====
+IC_TRACE ReflectionFunction::__construct("probe")
+IC_TRACE ReflectionFunction::invokeArgs([])
+IC_TRACE implode(",", [0=>"a", 1=>"b"])

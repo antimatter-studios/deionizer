@@ -1,0 +1,34 @@
+[
+  {
+    "class": "App\\Admin\\Controller",
+    "function": "index",
+    "file": "/enc/Controller.php",
+    "static": false,
+    "visibility": "public",
+    "params": [{"name": "vars", "has_default": false}],
+    "num_vars": 20,
+    "oplines": [
+      {"i": 0, "line": 10, "opcode": "ZEND_RECV", "op1": {"t": "UNUSED", "num": 1}, "op2": {"t": "UNUSED"}, "result": {"t": "CV", "var": "vars"}, "ext": 0},
+
+      {"i": 1, "line": 11, "opcode": "ZEND_INIT_METHOD_CALL", "op1": {"t": "UNUSED"}, "op2": {"t": "CONST", "val": "detectConflicts"}, "result": {"t": "UNUSED"}, "ext": 1},
+      {"i": 2, "line": 11, "opcode": "ZEND_CHECK_FUNC_ARG", "op1": {"t": "UNUSED"}, "op2": {"t": "UNUSED", "num": 1}, "result": {"t": "UNUSED"}, "ext": 0},
+      {"i": 3, "line": 11, "opcode": "ZEND_FETCH_DIM_FUNC_ARG", "op1": {"t": "CV", "var": "vars"}, "op2": {"t": "CONST", "val": "rules"}, "result": {"t": "VAR", "num": 12}, "ext": 0},
+      {"i": 4, "line": 11, "opcode": "ZEND_SEND_FUNC_ARG", "op1": {"t": "VAR", "num": 12}, "op2": {"t": "UNUSED", "num": 1}, "result": {"t": "UNUSED"}, "ext": 0},
+      {"i": 5, "line": 11, "opcode": "ZEND_DO_FCALL", "op1": {"t": "UNUSED"}, "op2": {"t": "UNUSED"}, "result": {"t": "VAR", "num": 13}, "ext": 0},
+      {"i": 6, "line": 11, "opcode": "ZEND_ASSIGN", "op1": {"t": "CV", "var": "conflicts"}, "op2": {"t": "VAR", "num": 28}, "result": {"t": "UNUSED"}, "ext": 0},
+
+      {"i": 7, "line": 12, "opcode": "ZEND_ASSIGN", "op1": {"t": "CV", "var": "html"}, "op2": {"t": "CONST", "val": ""}, "result": {"t": "UNUSED"}, "ext": 0},
+
+      {"i": 8, "line": 13, "opcode": "ZEND_INIT_NS_FCALL_BY_NAME", "op1": {"t": "UNUSED"}, "op2": {"t": "CONST", "val": "App\\Admin\\renderRow"}, "result": {"t": "UNUSED"}, "ext": 1},
+      {"i": 9, "line": 13, "opcode": "ZEND_CHECK_FUNC_ARG", "op1": {"t": "UNUSED"}, "op2": {"t": "UNUSED", "num": 1}, "result": {"t": "UNUSED"}, "ext": 0},
+      {"i": 10, "line": 13, "opcode": "ZEND_FETCH_DIM_FUNC_ARG", "op1": {"t": "CV", "var": "vars"}, "op2": {"t": "CONST", "val": "tpl"}, "result": {"t": "VAR", "num": 14}, "ext": 0},
+      {"i": 11, "line": 13, "opcode": "ZEND_SEND_FUNC_ARG", "op1": {"t": "VAR", "num": 14}, "op2": {"t": "UNUSED", "num": 1}, "result": {"t": "UNUSED"}, "ext": 0},
+      {"i": 12, "line": 13, "opcode": "ZEND_DO_FCALL_BY_NAME", "op1": {"t": "UNUSED"}, "op2": {"t": "UNUSED"}, "result": {"t": "VAR", "num": 15}, "ext": 0},
+      {"i": 13, "line": 13, "opcode": "ZEND_ASSIGN_OP", "op1": {"t": "CV", "var": "html"}, "op2": {"t": "VAR", "num": 30}, "result": {"t": "UNUSED"}, "ext": 8},
+
+      {"i": 14, "line": 14, "opcode": "ZEND_CONCAT", "op1": {"t": "CV", "var": "conflicts"}, "op2": {"t": "CV", "var": "html"}, "result": {"t": "TMP", "num": 16}, "ext": 0},
+      {"i": 15, "line": 14, "opcode": "ZEND_RETURN", "op1": {"t": "TMP", "num": 16}, "op2": {"t": "UNUSED"}, "result": {"t": "UNUSED"}, "ext": 0},
+      {"i": 16, "line": 15, "opcode": "ZEND_RETURN", "op1": {"t": "CONST", "val": null}, "op2": {"t": "UNUSED"}, "result": {"t": "UNUSED"}, "ext": 4294967295}
+    ]
+  }
+]

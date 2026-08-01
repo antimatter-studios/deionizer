@@ -1,0 +1,4 @@
+==== trace: ::doubler ====
+IC_TRACE ReflectionFunction::__construct("doubler")
+IC_TRACE ReflectionFunction::invokeArgs([])
+IC_TRACE fwrite(resource, ".ICO_JSON_BEGIN.")
