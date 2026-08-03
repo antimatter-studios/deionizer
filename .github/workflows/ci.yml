@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      # Lint the workflows themselves. actionlint is fetched as a release binary and
+      # checked against the sha256 the project publishes — the same verification the
+      # Homebrew tap performs on the artifacts it installs, and the reason this needs
+      # no third-party action.
+      - name: Lint workflows
+        if: matrix.os == 'ubuntu-latest'
+        env:
+          ACTIONLINT_VERSION: "1.7.12"
+        run: |
+          set -euo pipefail
+          base="https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}"
+          asset="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL -o "$asset" "${base}/${asset}"
+          curl -fsSL -o checksums.txt "${base}/actionlint_${ACTIONLINT_VERSION}_checksums.txt"
+          grep " ${asset}\$" checksums.txt | sha256sum -c -
+          tar xzf "$asset" actionlint
+          ./actionlint .github/workflows/*.yml
+
+      - name: Formatting
+        run: |
+          set -euo pipefail
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "gofmt would change:" >&2
+            echo "$unformatted" >&2
+            exit 1
+          fi
+
+      - name: Vet
+        run: go vet ./...
+
+      # The unit + golden tests are self-contained (stdlib only, no Docker daemon):
+      # the correctness matrix that needs Docker and the trial encoder lives behind
+      # tests/run.sh and is never invoked here, so this is green on a runner with no
+      # container runtime (e.g. macOS).
+      - name: Test
+        run: go test -race -count=1 ./...
+
+      - name: Build
+        run: go build -o /tmp/deionizer ./cmd/deionizer && /tmp/deionizer --version
+
+  # One always-run aggregate the branch protection can require by a single stable
+  # name, so the matrix legs above can be renamed or extended without stranding a
+  # merge. See .githooks/required-checks.
+  ci:
+    name: CI
+    needs: [test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      # The matrix result comes in via env, not interpolated into the script body,
+      # so the shell never parses GitHub-substituted text (injection-safe, and lint
+      # clean). A skipped leg still satisfies protection; only a failure fails here.
+      - env:
+          TEST_RESULT: ${{ needs.test.result }}
+        run: |
+          case "$TEST_RESULT" in
+            success|skipped) echo "all required jobs passed" ;;
+            *) echo "test job: $TEST_RESULT" >&2; exit 1 ;;
+          esac

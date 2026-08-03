@@ -1,0 +1,47 @@
+[
+    {
+        "class": "",
+        "function": "probe",
+        "file": "/enc/ns_const.php",
+        "static": false,
+        "visibility": "",
+        "params": [],
+        "num_vars": 0,
+        "oplines": [
+            {
+                "i": 0,
+                "line": 3,
+                "opcode": "ZEND_FETCH_CONSTANT",
+                "op1": {
+                    "t": "UNUSED",
+                    "num": 272
+                },
+                "op2": {
+                    "t": "CONST",
+                    "val": "App\\Sub\\ENT_QUOTES"
+                },
+                "result": {
+                    "t": "TMP",
+                    "num": 0
+                },
+                "ext": 24
+            },
+            {
+                "i": 1,
+                "line": 3,
+                "opcode": "ZEND_RETURN",
+                "op1": {
+                    "t": "TMP",
+                    "num": 0
+                },
+                "op2": {
+                    "t": "UNUSED"
+                },
+                "result": {
+                    "t": "UNUSED"
+                },
+                "ext": 0
+            }
+        ]
+    }
+]

@@ -1,0 +1,87 @@
+# ionCube Oracle interface-recovery runtime (generated + built by internal/docker).
+# A version-matched php:<ver>-cli with the real ionCube loader, used to LOAD
+# encoded PHP and reflect its interface via analyze.php. Codebase-agnostic.
+#
+# Generated from a go:embed template — there is no standalone Dockerfile to keep
+# in sync. {{.PHPVersion}} is filled in by internal/docker before `docker build`.
+ARG PHP_VERSION={{.PHPVersion}}
+FROM php:${PHP_VERSION}-cli
+ARG PHP_VERSION
+
+# --- APT: repair archived Debian suites --------------------------------------
+# php:5.6-cli / php:7.0-cli are built on jessie / stretch, whose mirrors have
+# moved to archive.debian.org (deb.debian.org + security.debian.org now 404).
+# Rewrite the sources, drop the removed *-updates suites, and stop apt from
+# rejecting the long-expired Release files. No-op on modern (bookworm) bases.
+RUN set -eux; \
+    if grep -qE 'jessie|stretch' /etc/apt/sources.list 2>/dev/null; then \
+      sed -i -e 's|deb.debian.org|archive.debian.org|g' \
+             -e 's|security.debian.org|archive.debian.org|g' \
+             -e '/jessie-updates/d' -e '/stretch-updates/d' \
+             /etc/apt/sources.list; \
+      { echo 'Acquire::Check-Valid-Until "false";'; \
+        echo 'Acquire::AllowInsecureRepositories "true";'; \
+        echo 'APT::Get::AllowUnauthenticated "true";'; \
+      } > /etc/apt/apt.conf.d/10archived; \
+    fi
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends unzip wget ca-certificates libsqlite3-dev; \
+    rm -rf /var/lib/apt/lists/*; \
+    (docker-php-ext-install pdo_sqlite >/dev/null 2>&1 || true)
+
+# Install the ionCube loader matching the image architecture + PHP version.
+# ionCube bytecode is architecture-independent; only the .so is arch-specific,
+# so any arch's loader for the right PHP version will run the encoded files.
+#
+# The current "latest" loader bundle drops old PHP: it no longer ships a
+# loader for PHP < 7.2. So we try the latest bundle first, and if it lacks a
+# loader_lin_${PHP_VERSION}.so we fall back through older dated tarballs
+# (10.3.9 is confirmed to still carry ioncube_loader_lin_5.6.so).
+#
+# LOADER_BASE_URL is supplied by the caller (env DEIONIZER_LOADER_BASE_URL) rather
+# than baked in here: the vendor's distribution endpoint is their property and
+# their business to move, so the repo does not hardcode it. See docs/USER-GUIDE.md §1.
+ARG LOADER_BASE_URL
+ARG LOADER_FALLBACK_VERSIONS="11.0.0 10.4.7 10.3.9"
+RUN set -eux; \
+    test -n "${LOADER_BASE_URL}" || { \
+      echo "LOADER_BASE_URL is empty — set DEIONIZER_LOADER_BASE_URL to the loader"; \
+      echo "distribution base URL for your platform (see docs/USER-GUIDE.md §1)."; \
+      exit 1; }; \
+    deb_arch="$(dpkg --print-architecture)"; \
+    case "$deb_arch" in \
+      amd64) ic="x86-64" ;; \
+      arm64) ic="aarch64" ;; \
+      armhf) ic="armv7l" ;; \
+      *) echo "unsupported arch $deb_arch"; exit 1 ;; \
+    esac; \
+    cd /tmp; \
+    dl() { wget -q -O "$2" "$1" || wget -q --no-check-certificate -O "$2" "$1"; }; \
+    so="ioncube/ioncube_loader_lin_${PHP_VERSION}.so"; \
+    found=""; \
+    if dl "${LOADER_BASE_URL}/ioncube_loaders_lin_${ic}.zip" latest.zip; then \
+      unzip -q -o latest.zip; \
+      [ -f "$so" ] && found="latest zip"; \
+    fi; \
+    if [ -z "$found" ]; then \
+      for VER in ${LOADER_FALLBACK_VERSIONS}; do \
+        if dl "${LOADER_BASE_URL}/ioncube_loaders_lin_${ic}_${VER}.tar.gz" "b-${VER}.tgz"; then \
+          tar -xzf "b-${VER}.tgz"; \
+          if [ -f "$so" ]; then found="bundle ${VER}"; break; fi; \
+        fi; \
+      done; \
+    fi; \
+    test -n "$found" || { echo "no ionCube loader for PHP ${PHP_VERSION} (arch ${ic})"; ls -la ioncube 2>/dev/null || true; exit 1; }; \
+    echo "using ionCube loader for PHP ${PHP_VERSION} from: ${found}"; \
+    ext_dir="$(php -r 'echo ini_get("extension_dir");')"; \
+    cp "$so" "$ext_dir/"; \
+    echo "zend_extension=${ext_dir}/ioncube_loader_lin_${PHP_VERSION}.so" > "$PHP_INI_DIR/conf.d/00-ioncube.ini"; \
+    php -v
+
+WORKDIR /work
+COPY src/ /opt/deionizer/
+# Target encoded tree is bind-mounted read-write at /target; artifacts land in place.
+ENTRYPOINT ["php", "/opt/deionizer/analyze.php"]
+CMD ["--help"]
