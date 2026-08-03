@@ -1,0 +1,658 @@
+[
+  {
+    "class": "",
+    "function": "probe",
+    "file": "/enc/methods_static_instance.php",
+    "static": false,
+    "visibility": "",
+    "params": [],
+    "num_vars": 1,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 35,
+        "opcode": "ZEND_INIT_STATIC_METHOD_CALL",
+        "op1": {
+          "t": "CONST",
+          "val": "Counter"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "make"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 1,
+        "line": 35,
+        "opcode": "ZEND_SEND_VAL",
+        "op1": {
+          "t": "CONST",
+          "val": 10
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 2,
+        "line": 35,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 1
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 35,
+        "opcode": "ZEND_ASSIGN",
+        "op1": {
+          "t": "CV",
+          "var": "c"
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 1
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 4,
+        "line": 36,
+        "opcode": "ZEND_INIT_METHOD_CALL",
+        "op1": {
+          "t": "CV",
+          "var": "c"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "inc"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 5,
+        "line": 36,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 3
+        },
+        "ext": 0
+      },
+      {
+        "i": 6,
+        "line": 36,
+        "opcode": "ZEND_INIT_METHOD_CALL",
+        "op1": {
+          "t": "VAR",
+          "num": 3
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "inc"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 7,
+        "line": 36,
+        "opcode": "ZEND_SEND_VAL_EX",
+        "op1": {
+          "t": "CONST",
+          "val": 5
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 8,
+        "line": 36,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 9,
+        "line": 37,
+        "opcode": "ZEND_INIT_METHOD_CALL",
+        "op1": {
+          "t": "CV",
+          "var": "c"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "value"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 10,
+        "line": 37,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 5
+        },
+        "ext": 0
+      },
+      {
+        "i": 11,
+        "line": 37,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "VAR",
+          "num": 5
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "|"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 6
+        },
+        "ext": 0
+      },
+      {
+        "i": 12,
+        "line": 37,
+        "opcode": "ZEND_GET_CLASS",
+        "op1": {
+          "t": "CV",
+          "var": "c"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 7
+        },
+        "ext": 0
+      },
+      {
+        "i": 13,
+        "line": 37,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 6
+        },
+        "op2": {
+          "t": "TMP",
+          "num": 7
+        },
+        "result": {
+          "t": "TMP",
+          "num": 8
+        },
+        "ext": 0
+      },
+      {
+        "i": 14,
+        "line": 37,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "TMP",
+          "num": 8
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 15,
+        "line": 38,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  },
+  {
+    "kind": "class",
+    "class": "Counter",
+    "properties": [
+      {
+        "name": "n",
+        "visibility": "private",
+        "has_default": true,
+        "default": null
+      }
+    ],
+    "constants": []
+  },
+  {
+    "class": "Counter",
+    "function": "__construct",
+    "file": "/enc/methods_static_instance.php",
+    "static": false,
+    "visibility": "public",
+    "params": [
+      {
+        "name": "start",
+        "has_default": true,
+        "default": 0
+      }
+    ],
+    "num_vars": 1,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 11,
+        "opcode": "ZEND_RECV_INIT",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": 0
+        },
+        "result": {
+          "t": "CV",
+          "var": "start"
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 13,
+        "opcode": "ZEND_ASSIGN_OBJ",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "n"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 2,
+        "line": 13,
+        "opcode": "ZEND_OP_DATA",
+        "op1": {
+          "t": "CV",
+          "var": "start"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 14,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  },
+  {
+    "class": "Counter",
+    "function": "inc",
+    "file": "/enc/methods_static_instance.php",
+    "static": false,
+    "visibility": "public",
+    "params": [
+      {
+        "name": "by",
+        "has_default": true,
+        "default": 1
+      }
+    ],
+    "num_vars": 1,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 16,
+        "opcode": "ZEND_RECV_INIT",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": 1
+        },
+        "result": {
+          "t": "CV",
+          "var": "by"
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 18,
+        "opcode": "ZEND_ASSIGN_OBJ_OP",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "n"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 1
+      },
+      {
+        "i": 2,
+        "line": 18,
+        "opcode": "ZEND_OP_DATA",
+        "op1": {
+          "t": "CV",
+          "var": "by"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 19,
+        "opcode": "ZEND_FETCH_THIS",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 2
+        },
+        "ext": 0
+      },
+      {
+        "i": 4,
+        "line": 19,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "TMP",
+          "num": 2
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 5,
+        "line": 20,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  },
+  {
+    "class": "Counter",
+    "function": "value",
+    "file": "/enc/methods_static_instance.php",
+    "static": false,
+    "visibility": "public",
+    "params": [],
+    "num_vars": 0,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 24,
+        "opcode": "ZEND_FETCH_OBJ_R",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "n"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 0
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 24,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "TMP",
+          "num": 0
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 2,
+        "line": 25,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  },
+  {
+    "class": "Counter",
+    "function": "make",
+    "file": "/enc/methods_static_instance.php",
+    "static": true,
+    "visibility": "public",
+    "params": [
+      {
+        "name": "start",
+        "has_default": false
+      }
+    ],
+    "num_vars": 1,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 27,
+        "opcode": "ZEND_RECV",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "CV",
+          "var": "start"
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 29,
+        "opcode": "ZEND_NEW",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 1
+        },
+        "ext": 1
+      },
+      {
+        "i": 2,
+        "line": 29,
+        "opcode": "ZEND_SEND_VAR_EX",
+        "op1": {
+          "t": "CV",
+          "var": "start"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 29,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 4,
+        "line": 29,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "VAR",
+          "num": 1
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 5,
+        "line": 30,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  }
+]

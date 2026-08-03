@@ -1,0 +1,388 @@
+version: "3"
+
+# deionizer chores — run with `chore` (github.com/antimatter-studios/chore).
+#
+#   chore --list                       every task
+#   chore <task> --help                what a task takes, and how to call it
+#   chore process examples/automagick  a task that takes a real argument
+#
+# Every path is anchored at {{.ROOT_DIR}}, so a task does the same thing from
+# any subdirectory of the checkout.
+
+# Deployment config lives in .env (copy .env.example). It is loaded here and
+# handed to the binary ONLY as command-line flags — the binary never reads the
+# environment itself. The `{{.CFG}}` snippet below turns whichever DEIONIZER_*
+# vars are set into the matching --flags via shell expansion, so unset vars add
+# nothing. This keeps the config path explicit: .env -> chore -> --flags -> binary.
+dotenv: ['.env']
+
+vars:
+  # Config flags, built from the .env-loaded environment by the command shell.
+  # Each ${VAR:+...} contributes its flag only when VAR is non-empty.
+  CFG: >-
+    ${DEIONIZER_LOADER_DIR:+--loader-dir "$DEIONIZER_LOADER_DIR"}
+    ${DEIONIZER_EXT_DIR:+--ext-dir "$DEIONIZER_EXT_DIR"}
+    ${DEIONIZER_GUARD_CONSTS:+--guard-consts "$DEIONIZER_GUARD_CONSTS"}
+    ${DEIONIZER_RUNTIMES:+--runtimes "$DEIONIZER_RUNTIMES"}
+  # The CLI is built here rather than at the repo root: the test harness wants an
+  # absolute path to a decoder binary, and `bin/deionizer` is the path
+  # the README already documents.
+  DECODER: '{{.ROOT_DIR}}/bin/deionizer'
+  # The deep-decode C shim's build context. This tree is NOT shipped with the
+  # tool — supply your own decode extension source and drop it here (or set
+  # DEIONIZER_EXT_DIR and adjust). Only the decode-image tasks need it;
+  # everything else works without it. Path is under the gitignored /tmp bucket.
+  EXT_DIR: '{{.ROOT_DIR}}/tmp/deionizer-ext'
+  # The runtime matrix is the single source of truth for image tags + platforms;
+  # tasks read it rather than hardcoding `deionizer-ext:v19`.
+  RUNTIMES_YML: '{{.ROOT_DIR}}/runtimes.yml'
+  DASHBOARD_MD: '{{.ROOT_DIR}}/tests/results/dashboard.md'
+
+# The auto-guard: before ANY task runs, activate the committed git hooks. This is
+# a lifecycle before_all (chore >= 0.2.0), which runs once per invocation and —
+# unlike wiring `deps: [hooks:ensure]` into every task — fires even when a task is
+# up to date. So the very first chore anyone runs after cloning installs the hooks,
+# with no per-task boilerplate and no way to run a task without the guard first.
+lifecycle:
+  before_all:
+    - task: hooks:ensure
+
+tasks:
+  # ------------------------------------------------------------------ setup --
+
+  # hooks:ensure is called by the lifecycle before_all above. It is silent and
+  # idempotent — it only speaks the one time it actually installs the hooks, so
+  # normal runs stay quiet.
+  hooks:ensure:
+    internal: true
+    silent: true
+    cmds:
+      - |
+        set -euo pipefail
+        cur=$(git -C "{{.ROOT_DIR}}" config core.hooksPath || true)
+        if [ "$cur" != ".githooks" ]; then
+          git -C "{{.ROOT_DIR}}" config core.hooksPath .githooks
+          echo ">> github-guard activated (core.hooksPath=.githooks) — commit/push guards now run."
+        fi
+
+  hooks:install:
+    desc: Activate the committed git hooks (github-guard) in this clone
+    silent: true
+    cmds:
+      # The .githooks/ payload travels with the repo; a fresh clone only needs to
+      # point git at it. core.hooksPath is per-clone LOCAL config, so each cloner
+      # runs this once. Idempotent. (hooks:ensure does this automatically before
+      # every task; this is the explicit, announced form.)
+      - |
+        set -euo pipefail
+        git -C "{{.ROOT_DIR}}" config core.hooksPath .githooks
+        echo "git hooks active: core.hooksPath=.githooks"
+        echo "guards in .githooks/pre-commit.d, pre-push.d, pre-merge-commit.d run on the matching git action."
+
+  # ------------------------------------------------------------------ build --
+
+  build:
+    desc: Build the CLI into bin/deionizer
+    sources:
+      - 'cmd/**/*.go'
+      - 'cmd/**/*.php' # driver.php is go:embed-ed into the binary
+      - 'internal/**/*.go'
+      - 'internal/**/*.php' # embed/analyze.php
+      - 'internal/**/*.tmpl' # embedded Dockerfile templates
+      - 'internal/**/*.yml' # embedded runtime matrix
+      - go.mod
+    generates:
+      - bin/deionizer
+    cmds:
+      - go build -o bin/deionizer ./cmd/deionizer
+
+  build:nodecompiler:
+    desc: Build with the decompiler seam OFF (interim signature renderer)
+    cmds:
+      - go build -tags nodecompiler -o bin/deionizer-nodec ./cmd/deionizer
+
+  # -------------------------------------------------------------- operations --
+
+  process:
+    desc: 'Auto-detect each project''s PHP version and full-decode a tree'
+    args:
+      - name: tree
+        desc: directory of ionCube-encoded PHP
+      - name: php
+        desc: force a runtime (5.6 7.2 7.4 8.1 8.3) instead of auto-detecting
+      - name: skeleton
+        type: bool
+        desc: interface-only recovery — exact signatures, no bodies
+      - name: verbose
+        type: bool
+        desc: per-file progress plus every docker command, on stderr
+    vars:
+      php: "" # empty is meaningful: it means "auto-detect"
+      skeleton: "" # a flag's absence IS its value
+      verbose: ""
+    deps: [build]
+    cmds:
+      - '{{.DECODER}} {{.CFG}} {{if .SKELETON}}--skeleton {{end}}{{if .VERBOSE}}--verbose {{end}}{{if .PHP}}--php {{.PHP}} {{end}}process {{.TREE}}'
+
+  decode:
+    desc: 'Force deep decode (reveal -> oplines -> PHP source): a tree decodes in place, a file or URL to stdout, or set output=DIR to mirror + write a confidence report'
+    args:
+      - name: input
+        desc: directory, single file, or http(s) URL of ionCube-encoded PHP (file/URL -> stdout, redirect to save)
+      - name: output
+        desc: mirror every decoded file into this dir (the source stays untouched) and write a confidence report there, instead of writing in place
+      - name: php
+        desc: force a runtime version instead of auto-detecting
+      - name: verbose
+        type: bool
+        desc: trace every docker command, container stderr and per-file timing
+    vars:
+      output: ""
+      php: ""
+      verbose: ""
+    deps: [build]
+    cmds:
+      - '{{.DECODER}} {{.CFG}} decode {{.INPUT}} {{if .OUTPUT}}--output {{.OUTPUT}} {{end}}{{if .PHP}}--php {{.PHP}} {{end}}{{if .VERBOSE}}--verbose{{end}}'
+
+  skeleton:
+    desc: Fast interface-only recovery (exact class/method signatures, no bodies)
+    args:
+      - name: tree
+        desc: directory of ionCube-encoded PHP
+      - name: php
+        desc: force a runtime version instead of auto-detecting
+      - name: verbose
+        type: bool
+        desc: trace every docker command and container stderr
+    vars:
+      php: ""
+      verbose: ""
+    deps: [build]
+    cmds:
+      - '{{.DECODER}} {{.CFG}} --skeleton {{if .VERBOSE}}--verbose {{end}}{{if .PHP}}--php {{.PHP}} {{end}}process {{.TREE}}'
+
+  shell:
+    desc: Interactive debug shell in the container matching a tree
+    args:
+      - name: dir
+        desc: directory of ionCube-encoded PHP
+      - name: php
+        desc: runtime version to open
+    vars:
+      php: "7.4"
+    deps: [build]
+    cmds:
+      - '{{.DECODER}} {{.CFG}} shell {{.DIR}} {{.PHP}}'
+
+  # ------------------------------------------------------------------ images --
+
+  image:oracle:
+    desc: Build the interface-recovery runtime image (deionizer:php<ver>)
+    args:
+      - name: php
+        desc: PHP version — 5.6, 7.2, 7.4, 8.1 or 8.3
+    vars:
+      php: "7.4"
+    deps: [build]
+    status:
+      - docker image inspect deionizer:php{{.PHP}} >/dev/null 2>&1
+    cmds:
+      # Every version goes through the binary now: the embedded oracle template
+      # de-archives buster too, so 7.2 no longer needs its own Dockerfile.
+      - '{{.DECODER}} {{.CFG}} build {{.PHP}}'
+
+  image:decode:
+    desc: Build the deep-decode (decode) image for one PHP version
+    args:
+      - name: php
+        desc: PHP version — 5.6, 7.2, 7.4, 8.1 or 8.3
+    vars:
+      php: "7.4"
+    cmds:
+      # The decode image is FROM the oracle runtime image, so ensure that first.
+      - task: image:oracle
+        vars:
+          php: '{{.PHP}}'
+      - |
+        set -euo pipefail
+        cd "{{.EXT_DIR}}"
+
+        # Tag and platform come from the runtime matrix, never from a literal here:
+        # a bumped decode_image (v18 -> v19) must not need an edit in two places.
+        field() {
+          awk -v want="\"$1\":" -v key="$2:" '
+            $1 == want { blk = 1; next }
+            blk && /^  "/ { exit }
+            blk && $1 == key { gsub(/"/, "", $2); print $2; exit }
+          ' "{{.RUNTIMES_YML}}"
+        }
+        tag=$(field "{{.PHP}}" decode_image)
+        platform=$(field "{{.PHP}}" platform)
+
+        # 7.4 was first and owns the unsuffixed Dockerfile; the rest are DockerfileNN.
+        if [ "{{.PHP}}" = "7.4" ]; then
+          df=Dockerfile
+        else
+          df="Dockerfile$(printf '%s' "{{.PHP}}" | tr -d '.')"
+        fi
+
+        [ -n "$tag" ] || { echo "no decode_image for PHP {{.PHP}} in runtimes.yml" >&2; exit 1; }
+        [ -f "$df" ]  || { echo "$df not found in {{.EXT_DIR}}" >&2; exit 1; }
+
+        echo ">> building $tag from $df${platform:+ (platform $platform)}"
+        docker build ${platform:+--platform "$platform"} -f "$df" -t "$tag" .
+
+  image:list:
+    desc: Which runtime / decode images from the matrix exist locally
+    silent: true
+    cmds:
+      - |
+        set -euo pipefail
+        field() {
+          awk -v want="\"$1\":" -v key="$2:" '
+            $1 == want { blk = 1; next }
+            blk && /^  "/ { exit }
+            blk && $1 == key { gsub(/"/, "", $2); print $2; exit }
+          ' "{{.RUNTIMES_YML}}"
+        }
+        have() { docker image inspect "$1" >/dev/null 2>&1 && echo "yes" || echo "MISSING"; }
+
+        printf '%-5s  %-24s %-8s  %-24s %s\n' PHP RUNTIME BUILT DECODE BUILT
+        awk '/^  "[0-9]+\.[0-9]+":/ { gsub(/["\:]/, "", $1); print $1 }' "{{.RUNTIMES_YML}}" |
+        while read -r ver; do
+          rt=$(field "$ver" image)
+          dec=$(field "$ver" decode_image)
+          printf '%-5s  %-24s %-8s  %-24s %s\n' \
+            "$ver" "$rt" "$(have "$rt")" "${dec:--}" "$([ -n "$dec" ] && have "$dec" || echo 'n/a')"
+        done
+
+  # ------------------------------------------------------------------- tests --
+
+  test:
+    desc: Go unit + golden tests
+    cmds:
+      - go test -count=1 ./...
+
+  test:race:
+    desc: Go tests with the race detector
+    cmds:
+      - go test -race -count=1 ./...
+
+  test:matrix:
+    desc: Full encode->decode->run correctness sweep (needs docker + the trial encoder)
+    args:
+      - name: versions
+        desc: 'PHP versions to run, e.g. "7.4 8.1" (default: every runnable one)'
+      - name: methods
+        desc: 'encoding methods, e.g. "plain optimise-max" (default: all)'
+      - name: fixtures
+        desc: 'fixture names, e.g. "for_loop closures" (default: all)'
+    vars:
+      versions: ""
+      methods: ""
+      fixtures: ""
+    deps: [build]
+    env:
+      # The harness defaults to bin/deionizer; point it at what `build` just produced.
+      DECODER: '{{.DECODER}}'
+      # An empty value reads as unset in the harness, so each of these means
+      # "no filter" unless the caller passed one.
+      VERSIONS: '{{.VERSIONS}}'
+      METHODS: '{{.METHODS}}'
+      FIXTURES: '{{.FIXTURES}}'
+    cmds:
+      - ./tests/run.sh
+
+  test:smoke:
+    desc: Single-cell smoke of the correctness harness (PHP 7.4, plain encode)
+    deps: [build]
+    env:
+      DECODER: '{{.DECODER}}'
+      VERSIONS: "7.4"
+      METHODS: plain
+    cmds:
+      - ./tests/run.sh
+
+  dashboard:
+    desc: Print the correctness matrix produced by the last harness run
+    silent: true
+    cmds:
+      - |
+        set -euo pipefail
+        [ -f "{{.DASHBOARD_MD}}" ] || { echo "no dashboard yet — run: chore test:matrix" >&2; exit 1; }
+        cat "{{.DASHBOARD_MD}}"
+
+  # ------------------------------------------------------------------ checks --
+
+  lint:
+    desc: gofmt check and go vet
+    cmds:
+      - |
+        unformatted=$(gofmt -l .)
+        if [ -n "$unformatted" ]; then
+          echo "gofmt would change:" >&2
+          echo "$unformatted" >&2
+          exit 1
+        fi
+      - go vet ./...
+
+  fmt:
+    desc: Rewrite sources with gofmt
+    cmds:
+      - gofmt -w .
+
+  check:runtimes:
+    desc: Verify runtimes.yml and its go:embed-ed copy still agree
+    silent: true
+    cmds:
+      - |
+        set -euo pipefail
+        # Comments are allowed to differ (the embedded copy documents itself as
+        # embedded); the matrix data is not.
+        strip() { grep -v '^[[:space:]]*#' "$1" | grep -v '^[[:space:]]*$'; }
+        if diff -u <(strip runtimes.yml) <(strip internal/runtime/runtimes.yml); then
+          echo "runtimes.yml == internal/runtime/runtimes.yml (data)"
+        else
+          echo "DRIFT: the embedded matrix differs from the root one" >&2
+          exit 1
+        fi
+
+  doctor:
+    desc: Check everything the decoder and the harness need before a run
+    silent: true
+    cmds:
+      - |
+        set -uo pipefail
+        bad=0
+        yes_() { printf '  ok    %s\n' "$1"; }
+        no_()  { printf '  MISS  %s\n' "$1"; bad=$((bad+1)); }
+
+        command -v docker >/dev/null && yes_ "docker"                || no_ "docker (required for every runtime)"
+        command -v go     >/dev/null && yes_ "go toolchain"          || no_ "go toolchain"
+        [ -x "{{.DECODER}}" ]            && yes_ "decoder: {{.DECODER}}"     || no_ "decoder not built — run: chore build"
+
+        enc="{{.ROOT_DIR}}/examples/ioncube-trial/ioncube_encoder_evaluation/bin"
+        [ -d "$enc" ] && yes_ "ionCube trial encoder"                || no_ "trial encoder under examples/ioncube-trial (test:matrix needs it)"
+
+        docker image inspect deionizer:php7.4 >/dev/null 2>&1 \
+          && yes_ "runtime image deionizer:php7.4" \
+          || no_ "runtime image deionizer:php7.4 — run: chore image:oracle 7.4"
+
+        echo
+        echo "image matrix:"
+        # Reuse the one place that knows the matrix rather than re-deriving it.
+        chore image:list 2>/dev/null || echo "  (chore not on PATH — skip)"
+
+        [ "$bad" -eq 0 ] && echo "ready" || { echo "$bad thing(s) missing" >&2; exit 1; }
+
+  # ------------------------------------------------------------------- clean --
+
+  clean:
+    desc: Remove build outputs from bin/
+    cmds:
+      - rm -f bin/deionizer bin/deionizer-nodec
+
+  clean:results:
+    desc: Remove the harness per-cell scratch (tests/results/work)
+    cmds:
+      - rm -rf tests/results/work

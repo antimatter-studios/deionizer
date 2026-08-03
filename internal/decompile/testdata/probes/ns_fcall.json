@@ -1,0 +1,84 @@
+[
+    {
+        "class": "",
+        "function": "probe",
+        "file": "/enc/ns_fcall.php",
+        "static": false,
+        "visibility": "",
+        "params": [
+            {
+                "name": "mappings",
+                "has_default": false
+            }
+        ],
+        "num_vars": 1,
+        "oplines": [
+            {
+                "i": 0,
+                "line": 3,
+                "opcode": "ZEND_INIT_NS_FCALL_BY_NAME",
+                "op1": {
+                    "t": "UNUSED"
+                },
+                "op2": {
+                    "t": "CONST",
+                    "val": "App\\Sub\\count"
+                },
+                "result": {
+                    "t": "UNUSED"
+                },
+                "ext": 1
+            },
+            {
+                "i": 1,
+                "line": 3,
+                "opcode": "ZEND_SEND_VAR_EX",
+                "op1": {
+                    "t": "CV",
+                    "var": "mappings"
+                },
+                "op2": {
+                    "t": "UNUSED",
+                    "num": 1
+                },
+                "result": {
+                    "t": "UNUSED",
+                    "num": 80
+                },
+                "ext": 0
+            },
+            {
+                "i": 2,
+                "line": 3,
+                "opcode": "ZEND_DO_FCALL_BY_NAME",
+                "op1": {
+                    "t": "UNUSED"
+                },
+                "op2": {
+                    "t": "UNUSED"
+                },
+                "result": {
+                    "t": "VAR",
+                    "num": 24
+                },
+                "ext": 0
+            },
+            {
+                "i": 3,
+                "line": 3,
+                "opcode": "ZEND_RETURN",
+                "op1": {
+                    "t": "VAR",
+                    "num": 24
+                },
+                "op2": {
+                    "t": "UNUSED"
+                },
+                "result": {
+                    "t": "UNUSED"
+                },
+                "ext": 0
+            }
+        ]
+    }
+]

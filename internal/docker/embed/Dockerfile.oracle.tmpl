@@ -1,0 +1,52 @@
+# ionCube Oracle interface-recovery runtime (generated + built by internal/docker).
+# A version-matched php:<ver>-cli with the real ionCube loader, used to LOAD
+# encoded PHP and reflect its interface via analyze.php. Codebase-agnostic.
+#
+# Generated from a go:embed template — there is no standalone Dockerfile to keep
+# in sync. {{.PHPVersion}} is filled in by internal/docker before `docker build`.
+ARG PHP_VERSION={{.PHPVersion}}
+FROM php:${PHP_VERSION}-cli
+ARG PHP_VERSION
+
+# --- APT: repair archived Debian suites --------------------------------------
+# php:5.6/7.0-cli are jessie/stretch and php:7.2-cli is buster — all now moved to
+# archive.debian.org (deb.debian.org + security.debian.org 404). Rewrite the
+# sources, drop the removed *-updates suites, and stop apt from rejecting the
+# long-expired Release files. No-op on modern (bookworm+) bases.
+RUN set -eux; \
+    if grep -qE 'jessie|stretch|buster' /etc/apt/sources.list 2>/dev/null; then \
+      sed -i -e 's|deb.debian.org|archive.debian.org|g' \
+             -e 's|security.debian.org|archive.debian.org|g' \
+             -e '/jessie-updates/d' -e '/stretch-updates/d' -e '/buster-updates/d' \
+             /etc/apt/sources.list; \
+      { echo 'Acquire::Check-Valid-Until "false";'; \
+        echo 'Acquire::AllowInsecureRepositories "true";'; \
+        echo 'APT::Get::AllowUnauthenticated "true";'; \
+      } > /etc/apt/apt.conf.d/10archived; \
+    fi
+
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends libsqlite3-dev; \
+    rm -rf /var/lib/apt/lists/*; \
+    (docker-php-ext-install pdo_sqlite >/dev/null 2>&1 || true)
+
+# The ionCube loader is the user's own: downloaded, unzipped, and passed via
+# --loader-dir (env DEIONIZER_LOADER_DIR). internal/docker copies the arch- and
+# version-matched .so into this build context under the canonical name below —
+# nothing is fetched here and no vendor URL is baked in. ionCube bytecode is
+# architecture-independent; only the .so is arch-specific, which is why the copier
+# picks the loader for the build's target arch.
+COPY ioncube_loader_lin_{{.PHPVersion}}.so /tmp/ioncube_loader.so
+RUN set -eux; \
+    ext_dir="$(php -r 'echo ini_get("extension_dir");')"; \
+    cp /tmp/ioncube_loader.so "${ext_dir}/ioncube_loader_lin_{{.PHPVersion}}.so"; \
+    echo "zend_extension=${ext_dir}/ioncube_loader_lin_{{.PHPVersion}}.so" > "$PHP_INI_DIR/conf.d/00-ioncube.ini"; \
+    php -v; \
+    php -m | grep -qi ioncube || { echo "ionCube loader present but did not load — likely an arch mismatch for PHP {{.PHPVersion}}"; exit 1; }
+
+WORKDIR /work
+COPY src/ /opt/deionizer/
+# Target encoded tree is bind-mounted read-write at /target; artifacts land in place.
+ENTRYPOINT ["php", "/opt/deionizer/analyze.php"]
+CMD ["--help"]

@@ -1,0 +1,6 @@
+==== trace: ::makeadder ====
+IC_TRACE ReflectionFunction::__construct("makeadder")
+IC_TRACE ReflectionFunction::invokeArgs([])
+==== trace: ::probe ====
+IC_TRACE ReflectionFunction::__construct("probe")
+IC_TRACE ReflectionFunction::invokeArgs([])

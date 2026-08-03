@@ -1,0 +1,42 @@
+# deionizer runtime matrix.
+#
+# The `process` dispatcher AUTO-DETECTS each project's target PHP version and
+# routes it to the matching container below — you never sort files by hand.
+#
+# Detection: an `//ICB0 74:.. 81:.. 82:..` bundle marker lists its versions
+# directly; a plain marker (`//004fb`, `//0046a`, ...) carries no version, so
+# the dispatcher trial-loads one file and reads the loader's verdict
+# ("encoded by the ionCube Encoder for PHP X.Y").
+#
+# Keys are the RUNTIME we actually run, not the exact encoded version: e.g.
+# PHP 5.3-encoded files run on the 5.6 runtime. `map` collapses an encoded
+# target to the nearest runtime (5.x->5.6, 7.x->7.4, 8.x->8.1).
+#
+# platform: force an emulated arch when the base image / loader is x86-64-only
+# (PHP < 7.2 has no arm64 image and ships only an x86-64 loader). Empty = native.
+# image:        interface-recovery runtime (analyze.php — works every version)
+# decode_image: deep body-decompile runtime (reveal + decode) where ported
+
+probe: "7.4"
+
+runtimes:
+  "5.6":
+    image: "deionizer:php5.6"
+    platform: "linux/amd64"
+    decode_image: "deionizer-ext56:v14"
+  "7.2":
+    image: "deionizer:php7.2"
+    platform: ""
+    decode_image: "deionizer-ext72:v8"
+  "7.4":
+    image: "deionizer:php7.4"
+    platform: ""
+    decode_image: "deionizer-ext:v27"
+  "8.1":
+    image: "deionizer:php8.1"
+    platform: ""
+    decode_image: "deionizer-ext81:v11"
+  "8.3":
+    image: "deionizer:php8.3"
+    platform: ""
+    decode_image: "deionizer-ext83:v12"

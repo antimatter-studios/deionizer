@@ -1,0 +1,38 @@
+# Editor scratch (VS Code Local History)
+.history
+
+# Local deployment config (the committed template is .env.example).
+/.env
+
+# Large third-party corpora: encoded sample trees and the ionCube Encoder
+# evaluation product. Not needed to build or test.
+/examples
+/fixtures
+
+# One local bucket for everything that must not be published — private working
+# material, generated artifacts, scratch. Nothing here is needed to build or test
+# from a clean checkout; keeping it in a single directory means this ignore file
+# does not have to catalogue what is inside.
+/tmp/
+/scratchpad/
+
+# Build output — compiled binaries. These are artifacts, never committed; a
+# fresh clone rebuilds them (`chore build` → go build -o bin/deionizer). Nothing
+# under bin/ is tracked.
+/bin/
+/harness
+
+# goreleaser release output, plus what the release workflow derives from it
+# (unpacked binaries + their checksum list). These must be ignored, or the
+# reproducible-build self-check aborts with "git is in a dirty state".
+/dist/
+/unpacked/
+/binaries.txt
+
+# Tool output + generated scratch
+/out/
+/.chore/
+/tests/realworld/work/
+/tests/results/work/
+/tests/results/dashboard.md
+*.bak

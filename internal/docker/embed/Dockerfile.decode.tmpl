@@ -1,0 +1,17 @@
+# Deep-decode runtime for PHP 7.x/8.x — generated and built by internal/docker.
+# Compiles the decode extension (decode.c) into the version-matched base image.
+# {{.PHPVersion}} selects the base image. The build context must supply decode.c
+# and config.m4 (the decode-extension source; see DEIONIZER_EXT_DIR).
+FROM deionizer:php{{.PHPVersion}}
+RUN apt-get update && apt-get install -y --no-install-recommends $PHPIZE_DEPS binutils file \
+    && rm -rf /var/lib/apt/lists/*
+COPY decode.c config.m4 /src/decode/
+RUN set -eux; \
+    cd /src/decode; \
+    phpize; \
+    ./configure --enable-decode; \
+    make -j2; \
+    make install; \
+    echo "extension=decode.so" > "$PHP_INI_DIR/conf.d/20-decode.ini"; \
+    php -m | grep -iE "decode|ionCube" || true
+ENTRYPOINT ["php"]

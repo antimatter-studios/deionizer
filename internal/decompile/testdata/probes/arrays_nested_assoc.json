@@ -1,0 +1,440 @@
+[
+  {
+    "class": "",
+    "function": "build",
+    "file": "/enc/arrays_nested_assoc.php",
+    "static": false,
+    "visibility": "",
+    "params": [],
+    "num_vars": 1,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 10,
+        "opcode": "ZEND_ASSIGN",
+        "op1": {
+          "t": "CV",
+          "var": "a"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": {
+            "name": "probe",
+            "nums": [
+              1,
+              2,
+              3
+            ],
+            "meta": {
+              "deep": {
+                "x": 9
+              }
+            }
+          }
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 14,
+        "opcode": "ZEND_FETCH_DIM_W",
+        "op1": {
+          "t": "CV",
+          "var": "a"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "nums"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 2
+        },
+        "ext": 0
+      },
+      {
+        "i": 2,
+        "line": 14,
+        "opcode": "ZEND_ASSIGN_DIM",
+        "op1": {
+          "t": "VAR",
+          "num": 2
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 14,
+        "opcode": "ZEND_OP_DATA",
+        "op1": {
+          "t": "CONST",
+          "val": 4
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 4,
+        "line": 15,
+        "opcode": "ZEND_FETCH_DIM_R",
+        "op1": {
+          "t": "CV",
+          "var": "a"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "name"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 4
+        },
+        "ext": 0
+      },
+      {
+        "i": 5,
+        "line": 15,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 4
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "|"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 5
+        },
+        "ext": 0
+      },
+      {
+        "i": 6,
+        "line": 15,
+        "opcode": "ZEND_INIT_FCALL_BY_NAME",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "implode"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 2
+      },
+      {
+        "i": 7,
+        "line": 15,
+        "opcode": "ZEND_SEND_VAL_EX",
+        "op1": {
+          "t": "CONST",
+          "val": ","
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 8,
+        "line": 15,
+        "opcode": "ZEND_CHECK_FUNC_ARG",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 9,
+        "line": 15,
+        "opcode": "ZEND_FETCH_DIM_FUNC_ARG",
+        "op1": {
+          "t": "CV",
+          "var": "a"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "nums"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 6
+        },
+        "ext": 0
+      },
+      {
+        "i": 10,
+        "line": 15,
+        "opcode": "ZEND_SEND_FUNC_ARG",
+        "op1": {
+          "t": "VAR",
+          "num": 6
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 11,
+        "line": 15,
+        "opcode": "ZEND_DO_FCALL_BY_NAME",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 7
+        },
+        "ext": 0
+      },
+      {
+        "i": 12,
+        "line": 15,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 5
+        },
+        "op2": {
+          "t": "VAR",
+          "num": 7
+        },
+        "result": {
+          "t": "TMP",
+          "num": 8
+        },
+        "ext": 0
+      },
+      {
+        "i": 13,
+        "line": 15,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 8
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "|"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 9
+        },
+        "ext": 0
+      },
+      {
+        "i": 14,
+        "line": 15,
+        "opcode": "ZEND_FETCH_DIM_R",
+        "op1": {
+          "t": "CV",
+          "var": "a"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "meta"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 10
+        },
+        "ext": 0
+      },
+      {
+        "i": 15,
+        "line": 15,
+        "opcode": "ZEND_FETCH_DIM_R",
+        "op1": {
+          "t": "TMP",
+          "num": 10
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "deep"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 11
+        },
+        "ext": 0
+      },
+      {
+        "i": 16,
+        "line": 15,
+        "opcode": "ZEND_FETCH_DIM_R",
+        "op1": {
+          "t": "TMP",
+          "num": 11
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "x"
+        },
+        "result": {
+          "t": "TMP",
+          "num": 12
+        },
+        "ext": 0
+      },
+      {
+        "i": 17,
+        "line": 15,
+        "opcode": "ZEND_CONCAT",
+        "op1": {
+          "t": "TMP",
+          "num": 9
+        },
+        "op2": {
+          "t": "TMP",
+          "num": 12
+        },
+        "result": {
+          "t": "TMP",
+          "num": 13
+        },
+        "ext": 0
+      },
+      {
+        "i": 18,
+        "line": 15,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "TMP",
+          "num": 13
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 19,
+        "line": 16,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  },
+  {
+    "class": "",
+    "function": "probe",
+    "file": "/enc/arrays_nested_assoc.php",
+    "static": false,
+    "visibility": "",
+    "params": [],
+    "num_vars": 0,
+    "oplines": [
+      {
+        "i": 0,
+        "line": 20,
+        "opcode": "ZEND_INIT_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "CONST",
+          "val": "build"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 1,
+        "line": 20,
+        "opcode": "ZEND_DO_FCALL",
+        "op1": {
+          "t": "UNUSED"
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "VAR",
+          "num": 0
+        },
+        "ext": 0
+      },
+      {
+        "i": 2,
+        "line": 20,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "VAR",
+          "num": 0
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 0
+      },
+      {
+        "i": 3,
+        "line": 21,
+        "opcode": "ZEND_RETURN",
+        "op1": {
+          "t": "CONST",
+          "val": null
+        },
+        "op2": {
+          "t": "UNUSED"
+        },
+        "result": {
+          "t": "UNUSED"
+        },
+        "ext": 4294967295
+      }
+    ]
+  }
+]
