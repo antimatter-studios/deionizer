@@ -144,7 +144,8 @@ repo without any manual setup.
 
 MIT — see [LICENSE](LICENSE). Point deionizer only at ionCube-encoded code you own
 or are authorised to recover. It deliberately does **not** implement a loader-free
-or universal decryptor and extracts no vendor key: recovery rides the loader's own
-restoration path, so it reaches exactly the code you can already run, and no
+or universal decryptor and extracts no vendor master key (it reads only the
+per-file state the loader itself restores at runtime): recovery rides the loader's
+own restoration path, so it reaches exactly the code you can already run, and no
 further. ionCube and its loader/encoder are the property of ionCube Ltd and are
 neither bundled nor redistributed here.

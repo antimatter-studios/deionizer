@@ -1,3 +1,5 @@
 work/
 run.log
 smoke.*
+results.json
+dashboard.md
