@@ -16,7 +16,8 @@ stdout, or a whole tree into a mirror with a per-file confidence report.
 > The corollary is the tool's scope boundary: recovery rides the loader's own
 > restoration path, so it reaches exactly the code you can already execute, and no
 > further. deionizer deliberately does not implement a loader-free or universal
-> ionCube decryptor, and extracts no vendor key.
+> ionCube decryptor, and extracts no vendor master key — only the per-file state
+> the loader itself restores while running your code.
 
 ---
 
