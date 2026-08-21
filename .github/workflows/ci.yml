@@ -54,11 +54,33 @@ jobs:
       - name: Vet
         run: go vet ./...
 
+      # A php interpreter turns on two more tiers inside `go test`: every frozen
+      # reveal capture is rendered, linted (`php -l`) and RUN, its stdout diffed
+      # against the plaintext fixture it was captured from. No loader, no decode
+      # extension, no encoder, no Docker — the capture stands in for stages 1-2.
+      # The ubuntu image ships php; install it if that ever changes.
+      - name: Ensure PHP
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          set -euo pipefail
+          command -v php >/dev/null || {
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq php-cli
+          }
+          php --version
+
       # The unit + golden tests are self-contained (stdlib only, no Docker daemon):
       # the correctness matrix that needs Docker and the trial encoder lives behind
       # tests/run.sh and is never invoked here, so this is green on a runner with no
       # container runtime (e.g. macOS).
+      #
+      # DEIONIZER_REQUIRE_PHP makes the lint/behavior tiers FATAL rather than
+      # skipped where we just guaranteed a php exists, so losing the interpreter
+      # can never quietly reduce this job to the offline goldens. The macOS leg has
+      # no php in the image and skips those two tiers by design.
       - name: Test
+        env:
+          DEIONIZER_REQUIRE_PHP: ${{ matrix.os == 'ubuntu-latest' && '1' || '' }}
         run: go test -race -count=1 ./...
 
       - name: Build

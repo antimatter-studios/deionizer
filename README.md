@@ -140,6 +140,10 @@ The first `chore` command you run in a fresh clone activates the repository's gi
 hooks automatically (a `lifecycle` hook), so the commit/push guards travel with the
 repo without any manual setup.
 
+[AGENTS.md](AGENTS.md) is the full operating manual — the test tiers and what each
+one can and cannot cover, the branch/PR/squash rules the hooks enforce, and the
+tag → release → Homebrew-tap path end to end.
+
 ## Scope & license
 
 MIT — see [LICENSE](LICENSE). Point deionizer only at ionCube-encoded code you own

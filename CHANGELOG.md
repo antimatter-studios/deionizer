@@ -2,6 +2,12 @@
 
 ## v0.1.1
 
+- **The lint and behavior tiers now run in CI.** Every frozen reveal capture is
+  rendered, checked with `php -l`, then run through the harness's name-independent
+  driver and diffed against the plaintext fixture it was captured from — on every
+  pull request, with no loader, decode extension, encoder or Docker involved. The
+  captures stand in for the stages that need vendor assets; the full
+  encode→decode→run matrix stays local (`chore test:matrix`).
 - **Bring-your-own loader (`--loader-dir`).** The ionCube loader is no longer fetched
   from a URL — you download and unzip it yourself and pass the directory
   (`--loader-dir` / `DEIONIZER_LOADER_DIR`, replacing `--loader-base-url` /

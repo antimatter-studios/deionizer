@@ -286,6 +286,13 @@ tasks:
     cmds:
       - go test -race -count=1 ./...
 
+  test:php:
+    desc: Lint + behavior tiers over the frozen captures (needs a php on PATH)
+    cmds:
+      # DEIONIZER_REQUIRE_PHP turns "no interpreter" from a skip into a failure:
+      # asking for this task explicitly means you want the tiers to actually run.
+      - DEIONIZER_REQUIRE_PHP=1 go test -count=1 -run TestRenderedFiles ./internal/decompile/
+
   test:matrix:
     desc: Full encode->decode->run correctness sweep (needs docker + the trial encoder)
     args:
