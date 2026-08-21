@@ -68,10 +68,10 @@ type options struct {
 
 	// Deployment config — supplied on the command line, defaulted to neutral local
 	// paths where a default makes sense, empty where the user must provide it.
-	extDir     string // deep-decode extension build context (default: tmp/deionizer-ext)
-	loaderDir     string // the user's unzipped ionCube loader directory (for image builds)
-	guardConsts   string // extra app bootstrap guard constants, comma-separated
-	runtimesPath  string // overlay runtime matrix file ("" = built-in only)
+	extDir       string // deep-decode extension build context (default: tmp/deionizer-ext)
+	loaderDir    string // the user's unzipped ionCube loader directory (for image builds)
+	guardConsts  string // extra app bootstrap guard constants, comma-separated
+	runtimesPath string // overlay runtime matrix file ("" = built-in only)
 }
 
 func main() {
