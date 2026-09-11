@@ -1,0 +1,9 @@
+# Paths that must never reach the published repository, read by
+# github-guard's git-block-private-paths guard. .gitignore covers the
+# accident; this covers `git add -f`, and travels to a fresh clone.
+#
+# Reverse-engineering material, third-party sample corpora and the vendored
+# encoder live under these.
+tmp
+examples
+fixtures
