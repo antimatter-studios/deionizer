@@ -59,25 +59,43 @@ tasks:
     cmds:
       - |
         set -euo pipefail
+        # The guards live in .git/hooks, which no ref can reach. This task used
+        # to point core.hooksPath at the tracked .githooks/ instead, and since
+        # it runs before EVERY task it re-armed that on every invocation: with
+        # hooks inside the working tree, checking out someone else's branch
+        # replaces the hook that runs on the next commit, with this machine's
+        # credentials. So it now clears that setting rather than setting it.
         cur=$(git -C "{{.ROOT_DIR}}" config core.hooksPath || true)
-        if [ "$cur" != ".githooks" ]; then
-          git -C "{{.ROOT_DIR}}" config core.hooksPath .githooks
-          echo ">> github-guard activated (core.hooksPath=.githooks) — commit/push guards now run."
+        if [ -n "$cur" ]; then
+          git -C "{{.ROOT_DIR}}" config --unset-all core.hooksPath || true
+          echo ">> cleared core.hooksPath=$cur — it overrides .git/hooks, where the guards are."
+        fi
+        # Never fails a task: a machine without the skill installed is a
+        # machine that says so once, not one that cannot run chores.
+        if [ ! -x "$(git -C "{{.ROOT_DIR}}" rev-parse --git-common-dir)/hooks/pre-commit" ]; then
+          echo ">> github-guard is not installed in this clone. Install it once:"
+          echo "   ~/.claude/skills/github-guard/install.sh ."
         fi
 
   hooks:install:
-    desc: Activate the committed git hooks (github-guard) in this clone
+    desc: Install the git hooks (github-guard) into this clone
     silent: true
     cmds:
-      # The .githooks/ payload travels with the repo; a fresh clone only needs to
-      # point git at it. core.hooksPath is per-clone LOCAL config, so each cloner
-      # runs this once. Idempotent. (hooks:ensure does this automatically before
-      # every task; this is the explicit, announced form.)
+      # The guards do NOT travel with the repo. They are copied into
+      # .git/hooks, outside the working tree, so that no branch checkout can
+      # rewrite the hook git is about to run; the price is that each clone
+      # installs its own, from the per-machine skill. Idempotent, and the
+      # installer also clears any core.hooksPath left over from the old
+      # arrangement, which would otherwise override what it just installed.
       - |
         set -euo pipefail
-        git -C "{{.ROOT_DIR}}" config core.hooksPath .githooks
-        echo "git hooks active: core.hooksPath=.githooks"
-        echo "guards in .githooks/pre-commit.d, pre-push.d, pre-merge-commit.d run on the matching git action."
+        inst="$HOME/.claude/skills/github-guard/install.sh"
+        if [ ! -x "$inst" ]; then
+          echo "github-guard is not installed on this machine (expected $inst)." >&2
+          echo "Ask install-skill to install github-guard, then run this again." >&2
+          exit 1
+        fi
+        "$inst" "{{.ROOT_DIR}}"
 
   # ------------------------------------------------------------------ build --
 
