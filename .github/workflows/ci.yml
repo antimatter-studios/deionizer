@@ -66,7 +66,7 @@ jobs:
 
   # One always-run aggregate the branch protection can require by a single stable
   # name, so the matrix legs above can be renamed or extended without stranding a
-  # merge. See .githooks/required-checks.
+  # merge. See .github-guard/required-checks.
   ci:
     name: CI
     needs: [test]
