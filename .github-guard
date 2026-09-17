@@ -1,0 +1,23 @@
+# .github-guard — declarations github-guard reads (see the github-guard skill:
+# https://github.com/antimatter-studios/agent-skills/blob/main/.claude/skills/github-guard/README.md).
+# git-config format: check with `git config -f .github-guard --list`, and
+# double-quote any value containing # or ;.
+
+# The status check main must pass before it takes a merge.
+#
+# One always-run aggregate job (CI) that `needs:` the test matrix, so the matrix legs
+# can be renamed or extended (more OSes, split steps) without ever stranding a merge on
+# a check name that stopped reporting. See .github/workflows/ci.yml.
+[checks]
+	required = CI
+
+# Paths that must never reach the published repository, read by
+# github-guard's git-block-private-paths guard. .gitignore covers the
+# accident; this covers `git add -f`, and travels to a fresh clone.
+#
+# Reverse-engineering material, third-party sample corpora and the vendored
+# encoder live under these.
+[paths]
+	private = tmp
+	private = examples
+	private = fixtures
